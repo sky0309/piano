@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using IrrKlang; //소리 다중 출력을 위한 Irrklang에 정의된 형식을 가져올 때 지시문
+using System.Runtime.InteropServices;
+
+namespace Piano_Program
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        //keyDown 클릭 이벤트 MouseDown일때 이미지 변경 및 소리 출력, label에 글자 출력
+        //keyUP일때 이미지 원래대로
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Z:
+                    pictureBox1.BackgroundImage = Properties.Resources.image3; //Z키다운 시 이미지 변경
+                    ISoundEngine engine1 = new ISoundEngine(); //engine1 변수선언(Irrklang시작)
+                    ISoundSource source1 = engine1.AddSoundSourceFromIOStream(Properties.Resources.DO, "wav"); //리소스에 있는 
+DO음 불러오기
+                    ISound sound1 = engine1.Play2D(source1, false, false, true);
+                    //source1에 들어있는 사운드를 2D로 출력(source1에 있는 DO음, 반복플레이 false, 시작 일시정지 false, 소리를 
+냄 true)
+                    keyboardkey.Text = "Z"; //label에 글자 출력
+                    pianokey.Text = "C3"; //label에 글자 출력
